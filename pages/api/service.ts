@@ -82,9 +82,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       caddyFile += `reverse_proxy localhost:${process.env.PORT}\n`;
       caddyFile += `}\n`;
 
-      // let result = await axios.post('http://localhost:2019/load', caddyFile, {
-      //   headers: { 'Content-Type': 'text/caddyfile' },
-      // });
+      console.log('caddyFile');
+      console.log(caddyFile);
+
+      let result = await axios.post('http://localhost:2019/load', caddyFile, {
+        headers: { 'Content-Type': 'text/caddyfile' },
+      });
 
       await prisma.handler.deleteMany({ where: { id: { notIn: handlerIDs } } });
 
