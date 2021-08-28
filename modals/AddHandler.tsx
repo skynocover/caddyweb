@@ -2,8 +2,9 @@ import React from 'react';
 import * as antd from 'antd';
 import cuid from 'cuid';
 
-import { AppContext, server, Handler } from '../components/AppContext';
+import { AppContext, Handler } from '../components/AppContext';
 import { Notification } from '../components/Notification';
+import { objectId } from '../utils/objectid';
 
 interface AddHandlerProps {
   serviceName: string;
@@ -24,7 +25,7 @@ export const AddHandler = ({ serviceName }: AddHandlerProps) => {
       if (server.name === serviceName) {
         if (!server.Handlers) server.Handlers = [];
         server.Handlers.push({
-          id: cuid(),
+          id: objectId(),
           type: values.type,
           routes: values.routes,
           target: values.target,
@@ -50,12 +51,13 @@ export const AddHandler = ({ serviceName }: AddHandlerProps) => {
         </antd.Select>
       </antd.Form.Item>
 
-      <antd.Form.Item name="routes">
+      <antd.Form.Item name="routes" label="routes">
         <antd.Input prefix={<i className="fa fa-exchange" />} placeholder="Please input routes" />
       </antd.Form.Item>
 
       <antd.Form.Item
         name="target"
+        label="target"
         rules={[{ required: true, message: 'Target should not empty!' }]}
       >
         <antd.Input

@@ -9,28 +9,21 @@ import { getSession } from 'next-auth/client';
 
 import { Notification } from '../components/Notification';
 import { prisma } from '../database/db';
-import { AppContext, server } from '../components/AppContext';
+import { AppContext, service } from '../components/AppContext';
 import { DangerButton } from '../components/DangerButton';
 import { AddService } from '../modals/AddService';
-import { EditServer } from '../modals/EditServer';
+import { EditService } from '../modals/EditService';
 
-const Home = ({ services, error }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const appCtx = React.useContext(AppContext);
-  const [dataSource, setDataSource] = React.useState<server[]>([]); //coulmns data
 
-  const router = useRouter();
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const [total, setTotal] = React.useState<number>(0);
-  const pageSize = 10;
-  const [activeKey, setActiveKey] = React.useState<string>('');
-
-  const deleteServer = () => {
-    appCtx.setDataSource((preState: server[]) => {
-      return preState.filter((server) => server.name !== activeKey);
+  const deleteServer = (id: string) => {
+    appCtx.setDataSource((preState: service[]) => {
+      return preState.filter((server) => server.id !== id);
     });
   };
 
-  const columns: ColumnsType<server> = [
+  const columns: ColumnsType<service> = [
     {
       title: 'Name',
       align: 'center',
@@ -52,48 +45,22 @@ const Home = ({ services, error }: InferGetServerSidePropsType<typeof getServerS
       render: (item) => (
         <antd.Button
           onClick={() => {
-            let cserver = appCtx.dataSource.filter((item) => item.name === activeKey);
-            appCtx.setModal(<EditServer server={cserver[0]} />);
+            let cserver = appCtx.dataSource.filter((item) => item.id === item.id);
+            appCtx.setModal(<EditService service={cserver[0]} />);
           }}
           type="primary"
         >
-          Edit Server
+          Edit Service
         </antd.Button>
       ),
     },
     {
       align: 'center',
-      render: (item) => <DangerButton title="刪除" message="確認刪除" onClick={deleteServer} />,
+      render: (item) => (
+        <DangerButton title="刪除" message="確認刪除" onClick={() => deleteServer(item.id)} />
+      ),
     },
   ];
-
-  // React.useEffect(() => {
-
-  //   const temp = [{ id: 0, name: 'Home' }].concat(services).map((service: Service) => {
-  //     return {
-  //       key: service.name,
-  //       title: service.name,
-  //     };
-  //   });
-  //   appCtx.setMenus(temp);
-  //   console.log(services);
-  //   appCtx.setDataSource(services);
-  // }, [appCtx.dataSource]);
-
-  // React.useEffect(() => {
-  //   if (error) {
-  //     Notification.add('error', error);
-  //   }
-  //   const temp = [{ id: 0, name: 'Home' }].concat(services).map((service: Service) => {
-  //     return {
-  //       key: service.name,
-  //       title: service.name,
-  //     };
-  //   });
-  //   appCtx.setMenus(temp);
-  //   console.log('services');
-  //   appCtx.setDataSource(services);
-  // }, []);
 
   const content = (
     <>
@@ -127,10 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
       };
     }
 
-    const services = await prisma.service.findMany({
-      select: { id: true, name: true, domain: true, port: true },
-    });
-    return { props: { services } };
+    return { props: {} };
   } catch (error) {
     return { props: { error: error.message } };
   }

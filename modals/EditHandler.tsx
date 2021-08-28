@@ -2,7 +2,7 @@ import React from 'react';
 import { ColumnsType } from 'antd/lib/table';
 import * as antd from 'antd';
 
-import { AppContext, server, Handler } from '../components/AppContext';
+import { AppContext, service, Handler } from '../components/AppContext';
 import { Notification } from '../components/Notification';
 
 interface EditHandlerProps {
@@ -17,7 +17,7 @@ export const EditHandler = ({ Handler }: EditHandlerProps) => {
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
 
-    appCtx.setDataSource((preState: server[]) => {
+    appCtx.setDataSource((preState: service[]) => {
       preState.map((server) => {
         if (server.Handlers) {
           server.Handlers = server.Handlers?.map((item) => {

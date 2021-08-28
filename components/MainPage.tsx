@@ -1,7 +1,7 @@
 import React from 'react';
 import * as antd from 'antd';
 
-import { AppContext, server } from './AppContext';
+import { AppContext, service } from './AppContext';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/client';
 
@@ -59,7 +59,7 @@ const MainPage = ({ menuKey, content }: MainPageProps) => {
   };
 
   const renderMenu = () => {
-    const init: server[] = [{ id: '', name: 'Home', port: '', domain: '', Handlers: [] }];
+    const init: service[] = [{ id: '', name: 'Home', port: '', domain: '', Handlers: [] }];
     return (
       <antd.Layout.Sider collapsible trigger={null} style={{ overflow: 'auto' }}>
         <antd.Menu

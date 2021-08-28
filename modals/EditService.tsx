@@ -1,39 +1,39 @@
 import React from 'react';
 import * as antd from 'antd';
 
-import { AppContext, server, Handler } from '../components/AppContext';
+import { AppContext, service, Handler } from '../components/AppContext';
 import { Notification } from '../components/Notification';
 
-interface EditServerProps {
-  server: server;
+interface EditServiceProps {
+  service: service;
 }
 
-export const EditServer = ({ server }: EditServerProps) => {
+export const EditService = ({ service }: EditServiceProps) => {
   const appCtx = React.useContext(AppContext);
 
   React.useEffect(() => {
-    console.log('server: ', JSON.stringify(server));
+    console.log('server: ', JSON.stringify(service));
   }, []);
 
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
 
     for (const item of appCtx.dataSource) {
-      if (item.name === values.name && item.id !== server.id) {
+      if (item.name === values.name && item.id !== service.id) {
         Notification.add('error', '服務名稱重複');
         return;
       }
     }
 
-    appCtx.setDataSource((preState: server[]) => {
+    appCtx.setDataSource((preState: service[]) => {
       let temp = preState.map((item) => {
-        if (item.id === server.id) {
+        if (item.id === service.id) {
           item = {
-            id: server.id,
+            id: service.id,
             domain: values.domain,
             name: values.name,
             port: values.port,
-            Handlers: server.Handlers,
+            Handlers: service.Handlers,
           };
         }
         return { ...item };
@@ -49,7 +49,7 @@ export const EditServer = ({ server }: EditServerProps) => {
     <div>
       <h5 className="font-weight-bold mb-4">Edit Server</h5>
 
-      <antd.Form onFinish={onFinish} initialValues={server}>
+      <antd.Form onFinish={onFinish} initialValues={service}>
         <antd.Form.Item name="name" rules={[{ required: true, message: 'Server名稱不可以空白!' }]}>
           <antd.Input prefix={<i className="fa fa-comment" />} placeholder="請輸入Server名稱" />
         </antd.Form.Item>
@@ -59,7 +59,7 @@ export const EditServer = ({ server }: EditServerProps) => {
         </antd.Form.Item>
 
         <antd.Form.Item name="port" rules={[{ required: true, message: 'Port不可以空白!' }]}>
-          <antd.Input prefix={<i className="fa fa-code-fork" />} placeholder="請輸入Port" />
+          <antd.InputNumber placeholder="請輸入Port" />
         </antd.Form.Item>
 
         <antd.Form.Item className="text-center">

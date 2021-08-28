@@ -4,7 +4,7 @@ import * as antd from 'antd';
 
 import { Notification } from '../components/Notification';
 
-export interface server {
+export interface service {
   id: string;
   domain: string;
   name: string;
@@ -40,8 +40,8 @@ interface AppContextProps {
 
   // menus: Menu[];
   // setMenus: React.Dispatch<React.SetStateAction<Menu[]>>;
-  dataSource: server[];
-  setDataSource: React.Dispatch<React.SetStateAction<server[]>>;
+  dataSource: service[];
+  setDataSource: React.Dispatch<React.SetStateAction<service[]>>;
 }
 
 const AppContext = React.createContext<AppContextProps>(undefined!);
@@ -57,7 +57,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
   const [isAdmin, setIsAdmin] = React.useState(false);
 
   const [menus, setMenus] = React.useState<Menu[]>([]);
-  const [dataSource, setDataSource] = React.useState<server[]>([]); //coulmns data
+  const [dataSource, setDataSource] = React.useState<service[]>([]); //coulmns data
   /////////////////////////////////////////////////////
 
   React.useEffect(() => {

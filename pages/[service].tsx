@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { AppContext, server, Handler } from '../components/AppContext';
+import { AppContext, service, Handler } from '../components/AppContext';
 import * as antd from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { DangerButton } from '../components/DangerButton';
@@ -12,62 +12,45 @@ import { prisma } from '../database/db';
 import { EditHandler } from '../modals/EditHandler';
 import { AddHandler } from '../modals/AddHandler';
 
-export default function Service({
-  service,
-  error,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Service({ error }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const appCtx = React.useContext(AppContext);
   const router = useRouter();
-  const [serviceName, setServiceName] = React.useState<string>('');
-  const [handers, setHandler] = React.useState<Handler[]>([]);
+  const [service, setService] = React.useState<service>({
+    id: '',
+    name: '',
+    domain: '',
+    port: '',
+    Handlers: [],
+  });
+  const [handlers, setHandlers] = React.useState<Handler[]>([]);
 
   React.useEffect(() => {
     if (error) {
       Notification.add('error', error);
     }
-    setServiceName(router.query.service as string);
-  }, [router.query.service]);
-
-  React.useEffect(() => {
+    console.log('aaaa');
     appCtx.dataSource.map((item) => {
       if (item.name === (router.query.service as string)) {
-        if (item.Handlers) {
-          setHandler([...item.Handlers]);
-        }
+        setService({ ...item });
+        setHandlers([...item.Handlers]);
       }
     });
-  }, [appCtx.dataSource]);
+  }, [router.query.service, appCtx.dataSource]);
 
   const deleteHandler = (handler: Handler) => {
-    appCtx.setDataSource((preState: server[]) => {
-      preState.map((server) => {
-        if (server.Handlers && server.Handlers.length > 0) {
-          server.Handlers = server.Handlers.filter((itemH) => itemH.id !== handler.id);
-        }
-        return { ...server };
-      });
-
-      return [...preState];
-    });
-  };
-
-  const putServers = async () => {
-    try {
-      let data = await appCtx.fetch('put', '/api/servers', { servers: appCtx.dataSource });
-      if (data) {
-        // initialize();
+    let newDataSource = [...appCtx.dataSource];
+    newDataSource.map((item) => {
+      if (item.id === service.id) {
+        let newHandlers = item.Handlers.filter((item) => item.id !== handler.id);
+        item.Handlers = [...newHandlers];
       }
-    } catch (error) {
-      Notification.add('error', error.message);
-    }
+      return { ...item };
+    });
+
+    appCtx.setDataSource([...newDataSource]);
   };
 
   const columns: ColumnsType<Handler> = [
-    {
-      title: 'id',
-      align: 'center',
-      dataIndex: 'id',
-    },
     {
       title: '類型',
       align: 'center',
@@ -114,23 +97,36 @@ export default function Service({
     },
   ];
 
+  const Deploy = async () => {
+    try {
+      let data = await appCtx.fetch('put', '/api/service', { services: appCtx.dataSource });
+      if (data) {
+        Notification.add('success', 'Deploy Services Success');
+      }
+    } catch (error) {
+      Notification.add('error', error.message);
+    }
+  };
+
   const content = (
     <>
       <antd.Descriptions bordered>
-        <antd.Descriptions.Item label="Domain">{service?.domain}</antd.Descriptions.Item>
-        <antd.Descriptions.Item label="Port">{service?.port}</antd.Descriptions.Item>
+        <antd.Descriptions.Item label="Domain">{service.domain}</antd.Descriptions.Item>
+        <antd.Descriptions.Item label="Port">{service.port}</antd.Descriptions.Item>
       </antd.Descriptions>
       <div className="d-flex my-2 justify-content-end ">
+        <DangerButton title="Deploy All Services" message="Ready for deploy?" onClick={Deploy} />
+        <div className="flex-fill" />
         <antd.Button
           onClick={() => {
-            appCtx.setModal(<AddHandler serviceName={serviceName} />);
+            appCtx.setModal(<AddHandler serviceName={service.name} />);
           }}
           type="primary"
         >
           Add Handler
         </antd.Button>
       </div>
-      <antd.Table dataSource={handers} columns={columns} pagination={false} />
+      <antd.Table dataSource={handlers} columns={columns} pagination={false} />
     </>
   );
   return <MainPage content={content} menuKey={router.query.service as string} />;
@@ -149,24 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
       };
     }
 
-    const service = await prisma.service.findFirst({
-      where: { name: query.service as string },
-      select: { id: true, domain: true, port: true, Handlers: true },
-    });
-
-    if (!service) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/',
-        },
-        props: {},
-      };
-    }
-
-    console.log(service);
-
-    return { props: { service } };
+    return { props: {} };
   } catch (error) {
     return { props: { error: error.message } };
   }

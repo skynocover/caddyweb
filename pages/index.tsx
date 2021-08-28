@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import { useSession, signIn } from 'next-auth/client';
-import { AppContext, server } from '../components/AppContext';
+import { AppContext } from '../components/AppContext';
 import { getSession } from 'next-auth/client';
 import { Notification } from '../components/Notification';
 import { prisma } from '../database/db';
@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
     }
 
     const services = await prisma.service.findMany({
-      select: { id: true, name: true, domain: true, port: true },
+      select: { id: true, name: true, domain: true, port: true, Handlers: true },
     });
     return { props: { services } };
   } catch (error) {
