@@ -68,8 +68,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await prisma.handler.deleteMany({ where: { id: { notIn: handlerIDs } } });
       await prisma.service.deleteMany({ where: { id: { notIn: serviceIDs } } });
 
-      caddyFile += `${process.env.NEXTAUTH_URL} {\n`;
-      caddyFile += `reverse_proxy localhost:${process.env.PORT}\n`;
+      const url = new URL(process.env.NEXTAUTH_URL||'')
+      caddyFile += `${url.host} {\n`;
+      caddyFile += `reverse_proxy * localhost:${process.env.PORT}\n`;
       caddyFile += `}\n`;
 
       console.log('caddyFile');
@@ -80,7 +81,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       res.json(Resp.success);
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error.message);
       res.json({ error: error.message, ...Resp.sqlExecFail });
     }
