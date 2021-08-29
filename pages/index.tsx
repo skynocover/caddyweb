@@ -21,9 +21,9 @@ export default function Index({
     } else if (!loading && session) {
       if (error) {
         Notification.add('error', error);
+      } else {
+        appCtx.setDataSource(services);
       }
-
-      appCtx.setDataSource(services);
       router.push('/Home');
     }
   }, [loading, session]);
@@ -34,13 +34,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
   try {
     const session = await getSession({ req });
     if (!session) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/',
-        },
-        props: {},
-      };
+      return { props: {} };
     }
 
     const services = await prisma.service.findMany({

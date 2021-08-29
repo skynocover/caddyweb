@@ -10,10 +10,13 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        if (credentials.email === 'admin' && credentials.password === '1qaz#EDC5tgb') {
+        if (
+          credentials.email === (process.env.NEXTAUTH_USER || '') &&
+          credentials.password === (process.env.NEXTAUTH_PASSWORD || '')
+        ) {
           const user = {
-            name: 'admin',
-            email: 'admin@gmail.com',
+            name: process.env.USER,
+            email: process.env.USER + '@gmail.com',
           };
 
           return user;

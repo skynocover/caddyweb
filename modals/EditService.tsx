@@ -50,15 +50,23 @@ export const EditService = ({ service }: EditServiceProps) => {
       <h5 className="font-weight-bold mb-4">Edit Server</h5>
 
       <antd.Form onFinish={onFinish} initialValues={service}>
-        <antd.Form.Item name="name" rules={[{ required: true, message: 'Server名稱不可以空白!' }]}>
+        <antd.Form.Item
+          name="name"
+          label="name"
+          rules={[{ required: true, message: 'Server名稱不可以空白!' }]}
+        >
           <antd.Input prefix={<i className="fa fa-comment" />} placeholder="請輸入Server名稱" />
         </antd.Form.Item>
 
-        <antd.Form.Item name="domain">
+        <antd.Form.Item name="domain" label="Domain">
           <antd.Input prefix={<i className="fa fa-at" />} placeholder="請輸入Domain" />
         </antd.Form.Item>
 
-        <antd.Form.Item name="port" rules={[{ required: true, message: 'Port不可以空白!' }]}>
+        <antd.Form.Item
+          name="port"
+          label="Port"
+          rules={[{ required: true, message: 'Port不可以空白!' }]}
+        >
           <antd.InputNumber placeholder="請輸入Port" />
         </antd.Form.Item>
 

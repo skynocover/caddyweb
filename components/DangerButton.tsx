@@ -11,11 +11,11 @@ interface DangerButtonProps {
 const DangerButton = ({ title, message, onClick, disabled }: DangerButtonProps) => {
   const showDialog = () => {
     antd.Modal.confirm({
-      title: '確認',
+      title: 'Confirm?',
       icon: <i />,
       content: message,
-      okText: '確認',
-      cancelText: '取消',
+      okText: 'Confirm',
+      cancelText: 'Cancel',
       onOk: onClick,
     });
   };

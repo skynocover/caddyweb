@@ -37,13 +37,13 @@ const MainPage = ({ menuKey, content }: MainPageProps) => {
                   signOut();
                 }}
               >
-                登出
+                Log Out
               </antd.Button>
             </div>
           }
         >
           <antd.Button type="link" icon={<i className="fa fa-user mr-2" />}>
-            {`使用者 : ${appCtx.account}`}
+            {`User : ${appCtx.account}`}
           </antd.Button>
         </antd.Popover>
       </antd.Layout.Header>

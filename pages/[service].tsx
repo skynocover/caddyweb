@@ -28,7 +28,6 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
     if (error) {
       Notification.add('error', error);
     }
-    console.log('aaaa');
     appCtx.dataSource.map((item) => {
       if (item.name === (router.query.service as string)) {
         setService({ ...item });
@@ -72,12 +71,7 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
       title: '',
       align: 'center',
       render: (item) => (
-        <antd.Button
-          onClick={() => {
-            appCtx.setModal(<EditHandler Handler={item} />);
-          }}
-          type="primary"
-        >
+        <antd.Button onClick={() => appCtx.setModal(<EditHandler Handler={item} />)} type="primary">
           Edit Handler
         </antd.Button>
       ),
@@ -89,9 +83,7 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
         <DangerButton
           title={'Delete'}
           message={'Delete handler'}
-          onClick={() => {
-            deleteHandler(item);
-          }}
+          onClick={() => deleteHandler(item)}
         />
       ),
     },
@@ -118,9 +110,7 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
         <DangerButton title="Deploy All Services" message="Ready for deploy?" onClick={Deploy} />
         <div className="flex-fill" />
         <antd.Button
-          onClick={() => {
-            appCtx.setModal(<AddHandler serviceName={service.name} />);
-          }}
+          onClick={() => appCtx.setModal(<AddHandler serviceName={service.name} />)}
           type="primary"
         >
           Add Handler
