@@ -52,12 +52,13 @@ export const EditHandler = ({ Handler }: EditHandlerProps) => {
         </antd.Select>
       </antd.Form.Item>
 
-      <antd.Form.Item name="routes">
+      <antd.Form.Item name="routes" label="routes">
         <antd.Input prefix={<i className="fa fa-exchange" />} placeholder="Please input routes" />
       </antd.Form.Item>
 
       <antd.Form.Item
         name="target"
+        label="target"
         rules={[{ required: true, message: 'Target should not empty!' }]}
       >
         <antd.Input

@@ -1,5 +1,11 @@
 # caddyweb
 
+> Web UI for [caddy](https://caddyserver.com/)
+
+## manage reverse proxy setting
+
+## .env
+
 ```env
 NEXTAUTH_URL=http://localhost:3000 #or Domain
 NEXTAUTH_USER=admin #user
@@ -7,5 +13,5 @@ NEXTAUTH_PASSWORD=123456 #password
 
 DATABASE_URL= #prisma config
 
-PORT=3000
+PORT=3000 # should be same as yarn start port
 ```

@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import { useSession, signIn } from 'next-auth/client';

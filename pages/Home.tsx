@@ -68,7 +68,11 @@ const Home = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     {
       align: 'center',
       render: (item) => (
-        <DangerButton title="Delete" message="確認刪除" onClick={() => DeleteService(item.id)} />
+        <DangerButton
+          title="Delete"
+          message="Delete Confirm?"
+          onClick={() => DeleteService(item.id)}
+        />
       ),
     },
   ];

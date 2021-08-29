@@ -76,7 +76,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       console.log('caddyFile');
       console.log(caddyFile);
 
-      let result = await axios.post('http://localhost:2019/load', caddyFile, {
+      await axios.post('http://localhost:2019/load', caddyFile, {
         headers: { 'Content-Type': 'text/caddyfile' },
       });
 

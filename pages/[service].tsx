@@ -51,7 +51,7 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
 
   const columns: ColumnsType<Handler> = [
     {
-      title: '類型',
+      title: 'Type',
       align: 'center',
       render: (item) => (
         <antd.Tag color={item.type === 'proxy' ? 'green' : 'geekblue'}>{item.type}</antd.Tag>
