@@ -1,9 +1,11 @@
 # caddyweb
 
 ```env
-NEXTAUTH_URL=http://localhost:3000
-DATABASE_URL=
+NEXTAUTH_URL=http://localhost:3000 #or Domain
+NEXTAUTH_USER=admin #user
+NEXTAUTH_PASSWORD=123456 #password
 
-DOMAIN=
+DATABASE_URL= #prisma config
+
 PORT=3000
 ```

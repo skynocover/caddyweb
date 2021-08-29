@@ -68,7 +68,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await prisma.handler.deleteMany({ where: { id: { notIn: handlerIDs } } });
       await prisma.service.deleteMany({ where: { id: { notIn: serviceIDs } } });
 
-      caddyFile += `${process.env.DOMAIN}:80 {\n`;
+      caddyFile += `${process.env.NEXTAUTH_URL} {\n`;
       caddyFile += `reverse_proxy localhost:${process.env.PORT}\n`;
       caddyFile += `}\n`;
 
