@@ -12,8 +12,6 @@ interface EditHandlerProps {
 export const EditHandler = ({ Handler }: EditHandlerProps) => {
   const appCtx = React.useContext(AppContext);
 
-  React.useEffect(() => {}, []);
-
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
 
@@ -32,10 +30,8 @@ export const EditHandler = ({ Handler }: EditHandlerProps) => {
             return item;
           });
         }
-
         return { ...server };
       });
-
       return [...preState];
     });
 

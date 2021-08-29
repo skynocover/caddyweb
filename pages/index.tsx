@@ -33,15 +33,13 @@ export default function Index({
 export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
   try {
     const session = await getSession({ req });
-    if (!session) {
-      return { props: {} };
-    }
+    if (!session) return { props: {} };
 
     const services = await prisma.service.findMany({
       select: { id: true, name: true, domain: true, port: true, Handlers: true },
     });
     return { props: { services } };
-  } catch (error) {
+  } catch (error: any) {
     return { props: { error: error.message } };
   }
 };

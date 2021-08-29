@@ -11,10 +11,6 @@ interface EditServiceProps {
 export const EditService = ({ service }: EditServiceProps) => {
   const appCtx = React.useContext(AppContext);
 
-  React.useEffect(() => {
-    console.log('server: ', JSON.stringify(service));
-  }, []);
-
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
 
@@ -38,7 +34,6 @@ export const EditService = ({ service }: EditServiceProps) => {
         }
         return { ...item };
       });
-
       return [...temp];
     });
 

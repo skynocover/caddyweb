@@ -92,10 +92,8 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
   const Deploy = async () => {
     try {
       let data = await appCtx.fetch('put', '/api/service', { services: appCtx.dataSource });
-      if (data) {
-        Notification.add('success', 'Deploy Services Success');
-      }
-    } catch (error) {
+      if (data) Notification.add('success', 'Deploy Services Success');
+    } catch (error: any) {
       Notification.add('error', error.message);
     }
   };
@@ -136,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
     }
 
     return { props: {} };
-  } catch (error) {
+  } catch (error: any) {
     return { props: { error: error.message } };
   }
 };

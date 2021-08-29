@@ -13,10 +13,6 @@ interface AddHandlerProps {
 export const AddHandler = ({ serviceName }: AddHandlerProps) => {
   const appCtx = React.useContext(AppContext);
 
-  React.useEffect(() => {
-    console.log(appCtx.dataSource);
-  }, []);
-
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
 

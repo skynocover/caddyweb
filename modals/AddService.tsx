@@ -9,8 +9,6 @@ import { objectId } from '../utils/objectid';
 
 export const AddService = () => {
   const appCtx = React.useContext(AppContext);
-  const router = useRouter();
-  React.useEffect(() => {}, []);
 
   const onFinish = async (values: any) => {
     appCtx.setModal(null);
@@ -34,6 +32,7 @@ export const AddService = () => {
   return (
     <antd.Form onFinish={onFinish} initialValues={{ port: 80 }}>
       <h5 className="font-weight-bold mb-4">Add Service</h5>
+
       <antd.Form.Item
         name="name"
         label="service name"
@@ -44,6 +43,7 @@ export const AddService = () => {
           placeholder="Please Input Service AppName"
         />
       </antd.Form.Item>
+
       <antd.Form.Item
         name="domain"
         label="Domain"
@@ -51,9 +51,11 @@ export const AddService = () => {
       >
         <antd.Input prefix={<i className="fa fa-desktop" />} placeholder="Please Input Domain" />
       </antd.Form.Item>
+
       <antd.Form.Item name="port" label="Port" rules={[{ required: true, message: 'Input Port' }]}>
         <antd.InputNumber placeholder="Please Input Port" />
       </antd.Form.Item>
+
       <antd.Form.Item className="text-center">
         <antd.Button type="primary" htmlType="submit">
           新增
