@@ -77,9 +77,20 @@ const Home = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     },
   ];
 
+  const Deploy = async () => {
+    try {
+      let data = await appCtx.fetch('put', '/api/service', { services: appCtx.dataSource });
+      if (data) Notification.add('success', 'Deploy Services Success');
+    } catch (error: any) {
+      Notification.add('error', error.message);
+    }
+  };
+
   const content = (
     <>
       <div className="d-flex justify-content-end mb-2">
+        <DangerButton title="Deploy All Services" message="Ready for deploy?" onClick={Deploy} />
+        <div className="flex-fill" />
         <antd.Button type="primary" onClick={() => appCtx.setModal(<AddService />)}>
           Add Service
         </antd.Button>
