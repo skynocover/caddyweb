@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { getSession } from 'next-auth/client';
-import { Prisma } from '.prisma/client';
 import { prisma } from '../../database/db';
 import { Resp, Tresp } from '../../resp/resp';
 

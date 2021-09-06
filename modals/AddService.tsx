@@ -52,6 +52,10 @@ export const AddService = () => {
         <antd.Input prefix={<i className="fa fa-desktop" />} placeholder="Please Input Domain" />
       </antd.Form.Item>
 
+      <antd.Form.Item name="create" label="Create on Cloudflare">
+        <antd.Switch defaultChecked />
+      </antd.Form.Item>
+
       <antd.Form.Item name="port" label="Port" rules={[{ required: true, message: 'Input Port' }]}>
         <antd.InputNumber placeholder="Please Input Port" />
       </antd.Form.Item>
