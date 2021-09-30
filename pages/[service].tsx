@@ -25,9 +25,8 @@ export default function Service({ error }: InferGetServerSidePropsType<typeof ge
   const [handlers, setHandlers] = React.useState<Handler[]>([]);
 
   React.useEffect(() => {
-    if (error) {
-      Notification.add('error', error);
-    }
+    if (error) Notification.add('error', error);
+
     appCtx.dataSource.map((item) => {
       if (item.name === (router.query.service as string)) {
         setService({ ...item });

@@ -17,9 +17,8 @@ import { EditService } from '../modals/EditService';
 const Home = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const appCtx = React.useContext(AppContext);
 
-  const DeleteService = (id: string) => {
+  const DeleteService = (id: string) =>
     appCtx.setDataSource((preState: service[]) => preState.filter((service) => service.id !== id));
-  };
 
   const EditSerivce = (id: string) => {
     const cserver = appCtx.dataSource.filter((service) => service.id === id);
